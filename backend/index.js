@@ -1,12 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 import authRouter from "./route/authRouter.js";
-// import coversationRoute from "./route/coversationRoute.js";
-// import messageRoute from "./route/messageRoute.js"
+import coversationRoute from "./route/coversationRoute.js";
+import messageRoute from "./route/messageRoute.js"
+import userRoute from "./route/userRoute.js"
 const app = express();
 dotenv.config();
 app.use(express.json());
+app.use(cors());
 
 mongoose.set("strictQuery", true);
 
@@ -27,9 +30,10 @@ mongoose.connection.on("disconnected", () => {
 });
 
 
-// app.use("/api/auth", authRouter);
-// app.use("/api/conversations", coversationRoute);
-// app.use("/api/messages", messageRoute);
+app.use("/api/auth", authRouter);
+app.use("/api/conversations", coversationRoute);
+app.use("/api/messages", messageRoute);
+app.use("/api/users", userRoute);
 
 
 app.listen("5000", () => {
